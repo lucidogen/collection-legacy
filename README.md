@@ -8,8 +8,6 @@ Manage collections of items with Cerebral, Firebase and Inferno or React.
 // collections/task.js
 import Collection from 'cerebral-collection'
 import { string, date, reference } from 'cerebral-collection/types'
-import Form from './common/Form'
-import List from './common/List'
 
 export default Collection
 ( { name: 'task'
@@ -18,7 +16,6 @@ export default Collection
     , date ( 'date' )
     , reference ( 'project' ) // expects a 'project' collection as well
     ]
-  , components: { Form, List } // optional, component factories
   }
 )
 ```
@@ -99,11 +96,11 @@ export default
 
 ### Views
 
-When creating the collection, you can pass component factories to create stubs automatically (see
-collection definition's 'components' entry). These factories are defined as follows:
+You simply use component factories that understand the content of a collection (fields, types, etc). Here
+is an idea for a form definition:
 
 ```js
-// collections/common/Form.js
+// components/common/Form.js
 
 import HeaderFactory from './Header'
 import FieldFactory from './Field'
@@ -160,4 +157,35 @@ export default function FromFactory ( collection ) {
     }
   )
 }
+```
+
+You then use these factories directly from within a component:
+
+```js
+// components/Workspace.js
+// shows a default list of items in a collection
+import React from 'react'
+import { connect } from 'cerebral/react'
+import List from './common/List'
+import Today from './Today'
+
+const VIEWS =
+{ Clients: List ( 'client' )
+, Projects: List ( 'project' )
+, Tasks: List ( 'task' )
+, Today
+}
+
+export default connect
+( { selectedView: 'app.$selectedView'
+  }
+, function Workspace ( { selectedView } ) {
+    const CurrentView = VIEWS [ selectedView ]
+    return (
+      <div className='section'>
+        <CurrentView />
+      </div>
+    )
+  }
+)
 ```
