@@ -1,0 +1,46 @@
+{
+  "name": "cerebral-collection",
+  "version": "1.0.0",
+  "description": "Manage collections of items with Cerebral, Firebase and Inferno or React",
+  "main": "index.js",
+  "scripts": {
+    "test": "node scripts/test.js --env=jsdom"
+  },
+  "author": "Gaspard Bucher <gaspard@lucidogen.io> (http://lucidogen.io)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^16.0.1",
+    "@types/uuid": "^2.0.29",
+    "dotenv": "^2.0.0",
+    "jest": "^17.0.3",
+    "ts-jest": "^17.0.3",
+    "typescript": "^2.1.4"
+  },
+  "dependencies": {
+    "cerebral": "2.0.0-0-alpha.ec8ba3a1",
+    "cerebral-provider-firebase": "1.0.0-0-alpha.ec8ba3a1",
+    "uuid": "^3.0.1"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js",
+      "^.+\\.css$": "<rootDir>/config/jest/CSSStub.js"
+    },
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/(node_modules|app/build)/"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$"
+  }
+}
