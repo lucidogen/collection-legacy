@@ -16,6 +16,7 @@ export default Collection
     , date ( 'date' )
     , reference ( 'project' ) // expects a 'project' collection as well
     ]
+  , state: { // optional initial state }
   }
 )
 ```
@@ -54,7 +55,7 @@ import taskCollection from '../collections/task'
 export default
 { state: Object.assign
   ( {}
-  , taskCollection.initState
+  , taskCollection.state
   , { // ... some more state }
   )
 { signals: Object.assign
