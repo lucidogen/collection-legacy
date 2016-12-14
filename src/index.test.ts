@@ -14,7 +14,11 @@ describe ( 'Collection.types', () => {
       ).types
     )
     .toEqual
-    ( ''
+    ( [ { name: 'name', type: 'string' }
+      , { name: 'description', type: 'string' }
+      , { name: 'date', type: 'date' }
+      , { name: 'projectRef', type: 'reference', collection: 'project' }
+      ]
     )
   })
 })

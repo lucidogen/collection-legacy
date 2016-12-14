@@ -10,7 +10,7 @@ import updated from './signals/updated'
 import updateDraft from './signals/updateDraft'
 import updateFilter from './signals/updateFilter'
 import uploadProgress from './signals/uploadProgress'
-import { CollectionFieldType } from './types'
+import { CollectionFieldType, string } from './types'
 
 type SignalType = any []
 
@@ -24,6 +24,8 @@ export interface CollectionType {
   signals: SignalsType
 }
 
+const NAME_TYPE = string ( 'name' )
+
 export default function Collection
 ( name: string
 , types: CollectionFieldType []
@@ -31,7 +33,7 @@ export default function Collection
 ) : CollectionType {
   return ( 
     { name
-    , types
+    , types: [ NAME_TYPE ].concat ( types )
     , signals:
       { create: create ( name )
       , discardDraft: discardDraft ( name )

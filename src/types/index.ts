@@ -7,6 +7,7 @@ export type FieldType = 'string' | 'date' | 'reference'
 export interface CollectionFieldType {
   name: string
   type: FieldType
+  icon?: string
   // For references
   collection?: string
 }
