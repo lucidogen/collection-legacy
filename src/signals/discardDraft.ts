@@ -1,10 +1,13 @@
-import {state, unset} from 'cerebral/operators'
-import paths from '../paths'
+import { CollectionPreType, SignalType } from '../'
+import { state, unset } from 'cerebral/operators'
 
-export default function (moduleName) {
-  const {draftPath} = paths(moduleName)
-  return [
-    unset(state`${draftPath}.key`),
-    unset(state`${draftPath}`)
-  ]
+export default function discardDraft
+( collection: CollectionPreType
+) : SignalType {
+  const { draftPath } = collection.paths
+  return (
+    [ unset ( state`${draftPath}.key` )
+    , unset ( state`${draftPath}` )
+    ]
+  )
 }

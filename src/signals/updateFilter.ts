@@ -1,9 +1,12 @@
-import {input, set, state} from 'cerebral/operators'
-import paths from '../paths'
+import { CollectionPreType, SignalType } from '../'
+import { input, set, state } from 'cerebral/operators'
 
-export default function (moduleName) {
-  const {filterPath} = paths(moduleName)
-  return [
-    set(state`${filterPath}`, input`value`)
-  ]
+export default function updateFilter
+( collection: CollectionPreType
+) : SignalType {
+  const { filterPath } = collection.paths
+  return (
+    [ set ( state`${filterPath}`, input`value` )
+    ]
+  )
 }

@@ -1,11 +1,14 @@
-import {input, set, state} from 'cerebral/operators'
-import paths from '../paths'
+import { CollectionPreType, SignalType } from '../'
+import { input, set, state } from 'cerebral/operators'
 
-export default function (moduleName) {
-  const {dynamicPaths} = paths(moduleName)
+export default function uploadProgress
+( collection: CollectionPreType
+) : SignalType {
+  const { dynamicPaths } = collection.paths
 
-  return [
-    ...dynamicPaths,
-    set(state`${input`itemPath`}.$imageProgress`, input`progress`)
-  ]
+  return (
+    [ ...dynamicPaths
+    , set ( state`${input`itemPath`}.$imageProgress`, input`progress` )
+    ]
+  )
 }

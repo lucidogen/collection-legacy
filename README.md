@@ -16,7 +16,10 @@ export default Collection
     , date ( 'date' )
     , reference ( 'project' ) // expects a 'project' collection as well
     ]
-  , state: { // optional initial state }
+    // optional initial state
+  , state: {}
+    // optional sort function (default is by name)
+  , sort: ( itemA, itemB ) => itemA.date > itemB.date ? 1 : -1
   }
 )
 ```
@@ -38,7 +41,7 @@ const controller = Controller
   , modules:
   { task: taskCollection.module
   }
-,  devtools: process.NODE_ENV === 'production' ? null : Devtools ()
+, devtools: process.NODE_ENV === 'production' ? null : Devtools ()
   }
 )
 ```
@@ -56,14 +59,14 @@ export default
 { state: Object.assign
   ( {}
   , taskCollection.state
-  , { // ... some more state }
+  , { /* ... some more state */ }
   )
-{ signals: Object.assign
+, signals: Object.assign
   ( {}
   , taskCollection.signals
-  , { // ... some other signals }
+  , { /* ... some other signals */ }
   )
-)
+}
 ```
 
 ### Signal chain reuse
@@ -189,4 +192,33 @@ export default connect
     )
   }
 )
+```
+
+### Connect helper
+
+For common props required in things like forms, list or items, you can
+use the `collection.connect` helpers. These are (list, form, item).
+Please refer to the files in `connect` for the details of what these
+provide.
+
+Using these helpers is entirely optional and the connection can be
+created without if it makes the code easier to read and maintain.
+
+```js
+// components/common/List.js
+export default function ListFactory ( collection ) {
+  return connect
+  ( ...collection.connect.list
+    ( { t: translations } /* optional extra props */
+    , {} /* optional extra signals */
+    )
+  , function List
+    ( { filter, selectedKey, visibleKeys, t
+      , enterPressed, onChange, onClick
+      }
+    ) {
+      // ... Component implementation
+    }
+  )
+}
 ```

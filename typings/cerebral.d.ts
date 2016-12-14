@@ -34,8 +34,8 @@ declare module 'cerebral/devtools' {
 
 declare module 'cerebral/operators' {
   interface Operators {
-    set ( path: TemplateStringsArray, ...values: any[] ): void
-    merge ( path: TemplateStringsArray, ...values: any[] ): any
+    set ( path: TemplateStringsArray, ...values: any[] ): any 
+    merge ( path: TemplateStringsArray, ...values: any[] ): any 
     input ( path: TemplateStringsArray, ...values: any[] ): any
     signal ( path: TemplateStringsArray, ...values: any[] ): any
     state ( path: TemplateStringsArray, ...values: any[] ): any

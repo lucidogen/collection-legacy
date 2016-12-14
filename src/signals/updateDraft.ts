@@ -1,25 +1,29 @@
-import {input, set, state, when} from 'cerebral/operators'
-import paths from '../paths'
+import { CollectionPreType, SignalType } from '../'
+import { input, set, state, when } from 'cerebral/operators'
 
-const MAX_IMAGE_SIZE = 100 * 1024
+const MAX_IMAGE_KB = 100
 
-const checkImageSize = (key, value) => {
-  if (key === '$imageFile' && value.size > MAX_IMAGE_SIZE) {
-    return false
-  }
-  return true
-}
+const validateNewValue = ( key, value ) => (
+  ( key !== '$imageFile' || value.size <= MAX_IMAGE_KB * 1024 )
+)
 
-export default function (moduleName) {
-  const {draftPath, errorPath} = paths(moduleName)
-  return [
-    when(input`key`, input`value`, checkImageSize), {
-      true: [
-        set(state`${draftPath}.${input`key`}`, input`value`)
-      ],
-      false: [
-        set(state`${errorPath}`, 'image exceeds maximum size of 100 KB')
-      ]
-    }
-  ]
+export default function updateDraft
+( collection: CollectionPreType
+) : SignalType {
+  const { draftPath, errorPath } = collection.paths
+  return (
+    [ when
+      ( input`key`
+      , input`value`
+      , validateNewValue
+      )
+    , { true:
+        [ set ( state`${draftPath}.${input`key`}`, input`value` )
+        ]
+      , false:
+        [ set ( state`${errorPath}`, `Image exceeds maximum size of ${MAX_IMAGE_KB} KB` )
+        ]
+      }
+    ]
+  )
 }
